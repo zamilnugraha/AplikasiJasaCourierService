@@ -1,6 +1,7 @@
 package com.sensei.model;
 
 import com.sensei.DAO.FileTarifKreditDAO;
+import javax.swing.JOptionPane;
 
 public class HitungTarifKiriman {
 
@@ -262,4 +263,5 @@ public class HitungTarifKiriman {
     public void setTipePaket(String tipePaket) {
         this.tipePaket = tipePaket;
     }
+    
 }

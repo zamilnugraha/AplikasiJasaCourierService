@@ -1784,7 +1784,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
             lblprvpengirim.setText(sender.getProvinsiPengirim());
             sender.setKotaPengirim(cmbkotapengirim.getSelectedItem().toString());
             lblkotapengirim.setText(sender.getKotaPengirim());
-
+            
             recevier.setNamaPenerima(txtnamapenerima.getText());
             lblnamapenerima.setText(recevier.getNamaPenerima());
             recevier.setAlamatPenerima(txtalamatpenerima.getText());
@@ -1815,7 +1815,9 @@ public class FormJasaCourier extends javax.swing.JFrame {
             lblberatbarang.setText(String.valueOf(tarifKirim.getBerat()));
             tarifKirim.setHargaBarang(Double.parseDouble(txtHargabarang.getText()));
             lblhargabarang.setText(String.valueOf(tarifKirim.getHargaBarang()));
-
+            tarifKirim.setTipePaket(cmbjenisbarang.getSelectedItem().toString());
+            lbljenisbarang.setText(tarifKirim.getTipePaket());
+            
             FormJasaCourier forms = new FormJasaCourier();
             forms.setVisible(false);
             this.dispose();
