@@ -1,11 +1,14 @@
 package com.sensei.model;
 
 import com.sensei.DAO.FileTarifKreditDAO;
+import com.sensei.DAO.HitungTipePaket;
 import javax.swing.JOptionPane;
 
 public class HitungTarifKiriman {
 
     FileTarifKreditDAO tarifdao = new FileTarifKreditDAO();
+    HitungTipePaket tarifPaket = new HitungTipePaket();
+    
     Pengirim sender = new Pengirim();
     Penerima recevier = new Penerima();
 
@@ -23,11 +26,16 @@ public class HitungTarifKiriman {
     private String noPaket;
     private boolean isAsuransi;
     private String tipePaket;
+    private double paketReguler;
+    private double paketExpress;
+    private double paketSds;
+    private double paketHds;
+    private double paketOns;
 
     public HitungTarifKiriman() {
     }
 
-    public HitungTarifKiriman(int berat, int pangjang, int lebar, int tinggi, String kota, String provinsi, String kotaTujuan, String jenisBarang, double asuransi, String noPaket, boolean isAsuransi, String tipePaket) {
+    public HitungTarifKiriman(int berat, int pangjang, int lebar, int tinggi, String kota, String provinsi, String kotaTujuan, String jenisBarang, double asuransi, String noPaket, boolean isAsuransi, String tipePaket, double paketReguler, double paketExpress, double paketSds, double paketHds, double paketOns) {
         this.berat = berat;
         this.pangjang = pangjang;
         this.lebar = lebar;
@@ -40,6 +48,11 @@ public class HitungTarifKiriman {
         this.noPaket = noPaket;
         this.isAsuransi = isAsuransi;
         this.tipePaket = tipePaket;
+        this.paketReguler = paketReguler;
+        this.paketExpress = paketExpress;
+        this.paketSds = paketSds;
+        this.paketHds = paketHds;
+        this.paketOns = paketOns;
     }
 
     /**
@@ -56,17 +69,76 @@ public class HitungTarifKiriman {
         this.jenisBarang = jenisBarang;
     }
 
-    public double cekTarifKirim() {
-        this.tarifTujuan = this.berat * 1000;
-        return tarifTujuan;
+    /**
+     * @return the paketReguler
+     */
+    public double getPaketReguler() {
+        return paketReguler;
     }
-    
-    public double totalTarifWithAsuransi(){
-        double totalBayar = 0.0;
-        totalBayar = cekTarifKirim() + tarifAsuransi();
-        return totalBayar;
+
+    /**
+     * @param paketReguler the paketReguler to set
+     */
+    public void setPaketReguler(double paketReguler) {
+        this.paketReguler = paketReguler;
     }
-    
+
+    /**
+     * @return the paketExpress
+     */
+    public double getPaketExpress() {
+        return paketExpress;
+    }
+
+    /**
+     * @param paketExpress the paketExpress to set
+     */
+    public void setPaketExpress(double paketExpress) {
+        this.paketExpress = paketExpress;
+    }
+
+    /**
+     * @return the paketSds
+     */
+    public double getPaketSds() {
+        return paketSds;
+    }
+
+    /**
+     * @param paketSds the paketSds to set
+     */
+    public void setPaketSds(double paketSds) {
+        this.paketSds = paketSds;
+    }
+
+    /**
+     * @return the paketHds
+     */
+    public double getPaketHds() {
+        return paketHds;
+    }
+
+    /**
+     * @param paketHds the paketHds to set
+     */
+    public void setPaketHds(double paketHds) {
+        this.paketHds = paketHds;
+    }
+
+    /**
+     * @return the paketOns
+     */
+    public double getPaketOns() {
+        return paketOns;
+    }
+
+    /**
+     * @param paketOns the paketOns to set
+     */
+    public void setPaketOns(double paketOns) {
+        this.paketOns = paketOns;
+    }
+
     /**
      * @return the isAsuransi
      */
@@ -81,12 +153,6 @@ public class HitungTarifKiriman {
         this.isAsuransi = isAsuransi;
     }
 
-    public double tarifKirimWithAsuransi() {
-        double hargaAsuransi = 0.0;
-        hargaAsuransi = cekTarifKirim() * hargaAsuransi;
-        return hargaAsuransi;
-    }
-    
     /**
      * @return the berat
      */
@@ -226,16 +292,16 @@ public class HitungTarifKiriman {
     public void setAsuransi(double asuransi) {
         this.asuransi = asuransi;
     }
-    
-    public double tarifAsuransi(){
-        if(this.isAsuransi == true){
+
+    public double tarifAsuransi() {
+        if (this.isAsuransi == true) {
             this.asuransi = getHargaBarang() * 0.3;
-        }else if(this.isAsuransi == false){
+        } else if (this.isAsuransi == false) {
             this.asuransi = 0.0;
         }
         return asuransi;
     }
-    
+
     /**
      * @return the noPaket
      */
@@ -263,5 +329,29 @@ public class HitungTarifKiriman {
     public void setTipePaket(String tipePaket) {
         this.tipePaket = tipePaket;
     }
-    
+
+    public void paketReg() {
+        this.paketReguler = this.berat * this.paketReguler;
+    }
+
+    public void paketExp() {
+        this.paketExpress = this.berat * this.paketExpress;
+    }
+
+    public void paketSds() {
+        this.paketSds = this.berat * this.paketSds;
+    }
+
+    public void paketHds() {
+        this.paketHds = this.berat * this.paketHds;
+    }
+
+    public void paketOns() {
+        this.paketOns = this.berat * this.paketOns;
+    }
+
+    @Override
+    public String toString() {
+        return this.kotaTujuan;
+    }
 }

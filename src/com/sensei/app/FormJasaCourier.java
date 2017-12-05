@@ -5,20 +5,17 @@
  */
 package com.sensei.app;
 
+import com.sensei.DAO.FileTarifKreditDAO;
+import com.sensei.DAO.HitungTipePaket;
 import com.sensei.model.HitungTarifKiriman;
 import com.sensei.model.Penerima;
 import com.sensei.model.Pengirim;
 import com.sun.glass.events.KeyEvent;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,22 +24,24 @@ import javax.swing.JOptionPane;
  */
 public class FormJasaCourier extends javax.swing.JFrame {
 
-    DecimalFormat df = new DecimalFormat("###,###.##");
     HitungTarifKiriman tarifKirim = new HitungTarifKiriman();
+    FileTarifKreditDAO tarifDAO = new FileTarifKreditDAO();
     Pengirim sender = new Pengirim();
     Penerima recevier = new Penerima();
+    List<HitungTarifKiriman> tarif;
+    HitungTipePaket tarifPaket = new HitungTipePaket();
 
     /**
      * Creates new form FormJasaCourier
      */
     public FormJasaCourier() {
+        tarifPaket = new HitungTipePaket();
         initComponents();
         tanggal();
-        txtpanjang.setEnabled(false);
-        txttinggi.setEnabled(false);
-        txtlebar.setEnabled(false);
-        txtberat.setEnabled(false);
+        
+        cmbprovinsipenerima.setModel(new javax.swing.DefaultComboBoxModel<>(tarifDAO.daftarTarifKota()));
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -196,7 +195,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         cmbprovinsipenerima = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
-        cmbkotapenerima = new javax.swing.JComboBox<>();
+        txtprov = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -1077,13 +1076,17 @@ public class FormJasaCourier extends javax.swing.JFrame {
             }
         });
 
-        jLabel17.setText("Provinsi :");
+        jLabel17.setText("Kota :");
 
-        cmbprovinsipenerima.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DKI Jakarta","Jawa Barat","Jawa Timur","Jawa Tengah","Kalimantan" }));
+        cmbprovinsipenerima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbprovinsipenerimaActionPerformed(evt);
+            }
+        });
 
-        jLabel18.setText("Kota :");
+        jLabel18.setText("Provinsi :");
 
-        cmbkotapenerima.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jakarta Timur","Jakarta Barat","Jakarta Selatan","Bandung","Tasikmalaya","Malang","Yogyakarta","Surabaya" }));
+        txtprov.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1105,14 +1108,13 @@ public class FormJasaCourier extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addComponent(txtnamapenerima, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtnotelppenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(cmbkotapenerima, javax.swing.GroupLayout.Alignment.LEADING, 0, 133, Short.MAX_VALUE)
-                                    .addComponent(cmbprovinsipenerima, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(txtkodepospenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtnohppenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtnotelppenerima, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                                    .addComponent(txtkodepospenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtnohppenerima, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                                    .addComponent(cmbprovinsipenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtprov))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -1133,8 +1135,8 @@ public class FormJasaCourier extends javax.swing.JFrame {
                     .addComponent(cmbprovinsipenerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbkotapenerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
+                    .addComponent(jLabel18)
+                    .addComponent(txtprov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtkodepospenerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1197,14 +1199,14 @@ public class FormJasaCourier extends javax.swing.JFrame {
 
         jLabel59.setText("Provinsi :");
 
-        cmbprovpengirim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DKI Jakarta","Jawa Barat","Jawa Timur","Jawa Tengah","Kalimantan" }));
+        cmbprovpengirim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DKI Jakarta"}));
         cmbprovpengirim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbprovpengirimActionPerformed(evt);
             }
         });
 
-        cmbkotapengirim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jakarta Timur","Jakarta Barat","Jakarta Selatan","Bandung","Tasikmalaya","Malang","Yogyakarta","Surabaya" }));
+        cmbkotapengirim.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Jakarta Utara", "Jakarta Timur","Jakarta Barat","Jakarta Selatan"}));
 
         jLabel61.setText("Kota :");
 
@@ -1242,8 +1244,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel13)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtkodepos, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtkodepos, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(21, 21, 21))
         );
         jPanel2Layout.setVerticalGroup(
@@ -1256,7 +1257,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel59)
@@ -1290,7 +1291,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
             }
         });
 
-        jLabel20.setText("Jenis Barang :");
+        jLabel20.setText("Dimensi :");
 
         cmbjenisbarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Pilih Jenis barang-","Dokumen","Elektronik","Makanan","Pakaian"}));
         cmbjenisbarang.addActionListener(new java.awt.event.ActionListener() {
@@ -1312,7 +1313,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
             }
         });
 
-        jLabel23.setText("Dimensi :");
+        jLabel23.setText("Jenis Barang :");
 
         jLabel24.setText("Panjang :");
 
@@ -1621,8 +1622,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnproses)
                             .addComponent(btnhapus)
-                            .addComponent(btnkeluar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(btnkeluar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(12, 12, 12))
         );
 
@@ -1731,19 +1731,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnohppenerimaActionPerformed
 
     private void cmbjenisbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbjenisbarangActionPerformed
-        if (cmbjenisbarang.getSelectedItem().equals("Dokumen")) {
-            txtpanjang.setEnabled(true);
-            txttinggi.setEnabled(true);
-            txtlebar.setEnabled(true);
-            txtberat.setEnabled(false);
-        } else if (cmbjenisbarang.getSelectedItem().equals("-Pilih Jenis barang-")) {
-            JOptionPane.showMessageDialog(rootPane, "Jenis ini tidak ada");
-        } else {
-            txtberat.setEnabled(true);
-            txtpanjang.setEnabled(false);
-            txttinggi.setEnabled(false);
-            txtlebar.setEnabled(false);
-        }
+
     }//GEN-LAST:event_cmbjenisbarangActionPerformed
 
     private void txtberatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtberatActionPerformed
@@ -1764,7 +1752,6 @@ public class FormJasaCourier extends javax.swing.JFrame {
 
     private void btnprosesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnprosesActionPerformed
         // TODO add your handling code here:
-
         try {
             cekTipePaket();
             tambahTanggal();
@@ -1784,7 +1771,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
             lblprvpengirim.setText(sender.getProvinsiPengirim());
             sender.setKotaPengirim(cmbkotapengirim.getSelectedItem().toString());
             lblkotapengirim.setText(sender.getKotaPengirim());
-            
+
             recevier.setNamaPenerima(txtnamapenerima.getText());
             lblnamapenerima.setText(recevier.getNamaPenerima());
             recevier.setAlamatPenerima(txtalamatpenerima.getText());
@@ -1795,29 +1782,78 @@ public class FormJasaCourier extends javax.swing.JFrame {
             lblnohppenerima.setText(recevier.getNoHpPenerima());
             recevier.setNoTelpPenerima(txtnotelppenerima.getText());
             lblnotelppenerima.setText(recevier.getNoTelpPenerima());
-            recevier.setProvinsiPenerima(cmbprovinsipenerima.getSelectedItem().toString());
-            lblprovpenerima.setText(recevier.getProvinsiPenerima());
-            recevier.setKotaPenerima(cmbkotapenerima.getSelectedItem().toString());
-            lblkotapenerimas.setText(recevier.getKotaPenerima());
-            
-            if(rbtYA.isSelected()){
+            lblprovpenerima.setText(tarifKirim.getProvinsi());
+            lblkotapenerimas.setText(tarifKirim.getKotaTujuan());
+
+            if (rbtYA.isSelected()) {
                 tarifKirim.setIsAsuransi(true);
+                tarifPaket.setAsuransi(true);
                 lblasuransi.setText("YA");
-            }else{
+            } else {
                 tarifKirim.setIsAsuransi(false);
+                tarifPaket.setAsuransi(false);
                 lblasuransi.setText("Tidak");
             }
             tarifKirim.setNoPaket(txtnopaket.getText());
+            tarifPaket.setNoPaket(txtnopaket.getText());
             lblnopaket.setText(tarifKirim.getNoPaket());
             tarifKirim.setJenisBarang(cmbjenisbarang.getSelectedItem().toString());
+            tarifPaket.setJenisBarang(cmbjenisbarang.getSelectedItem().toString());
             lbljenisbarang.setText(tarifKirim.getJenisBarang());
             tarifKirim.setBerat(Integer.parseInt(txtberat.getText()));
+            tarifPaket.setBeratBarang(Integer.parseInt(txtberat.getText()));
             lblberatbarang.setText(String.valueOf(tarifKirim.getBerat()));
             tarifKirim.setHargaBarang(Double.parseDouble(txtHargabarang.getText()));
+            tarifPaket.setHargaBarang(Double.parseDouble(txtHargabarang.getText()));
             lblhargabarang.setText(String.valueOf(tarifKirim.getHargaBarang()));
-            tarifKirim.setTipePaket(cmbjenisbarang.getSelectedItem().toString());
             lbljenisbarang.setText(tarifKirim.getTipePaket());
-            
+            tarifKirim.setKotaTujuan(cmbprovinsipenerima.getSelectedItem().toString());
+            tarifPaket.setKotaTujuan(cmbprovinsipenerima.getSelectedItem().toString());
+            tarifPaket.setNoPaket(txtnopaket.getText());
+            if (rbtons.isSelected()) {
+                tarifPaket.setTipePaket(rbtons.getText());
+            } else if (rbthds.isSelected()) {
+                tarifPaket.setTipePaket(rbthds.getText());
+            } else if (rbtsds.isSelected()) {
+                tarifPaket.setTipePaket(rbtsds.getText());
+            } else if (rbtexpress.isSelected()) {
+                tarifPaket.setTipePaket(rbtexpress.getText());
+            } else if (rbtreguler.isSelected()) {
+                tarifPaket.setTipePaket(rbtreguler.getText());
+            }
+            tarifPaket.setHargaBarang(Double.parseDouble(txtHargabarang.getText()));
+            tarifPaket.setBeratBarang(Integer.parseInt(txtberat.getText()));
+            tarifPaket.setPanjang(Double.parseDouble(txtpanjang.getText()));
+            tarifPaket.setTinggi(Double.parseDouble(txttinggi.getText()));
+            tarifPaket.setLebar(Double.parseDouble(txtlebar.getText()));
+
+            if (rbtons.isSelected()) {
+                tarifPaket.tarifPaketONS();
+                tarifPaket.setHargaKaliBerat();
+                tarifPaket.setHargaAsuransi();
+                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+            } else if (rbthds.isSelected()) {
+                tarifPaket.tarifPaketHDS();
+                tarifPaket.setHargaKaliBerat();
+                tarifPaket.setHargaAsuransi();
+                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+            } else if (rbtsds.isSelected()) {
+                tarifPaket.tarifPaketSDS();
+                tarifPaket.setHargaKaliBerat();
+                tarifPaket.setHargaAsuransi();
+                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+            } else if (rbtexpress.isSelected()) {
+                tarifPaket.tarifPaketExpress();
+                tarifPaket.setHargaKaliBerat();
+                tarifPaket.setHargaAsuransi();
+                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+            } else if (rbtreguler.isSelected()) {
+               tarifPaket.tarifPaketReguler();
+                tarifPaket.setHargaKaliBerat();
+                tarifPaket.setHargaAsuransi();
+                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+            }
+
             FormJasaCourier forms = new FormJasaCourier();
             forms.setVisible(false);
             this.dispose();
@@ -1828,9 +1864,6 @@ public class FormJasaCourier extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Data tidak boleh kosong..!!");
             strukDialog.setVisible(false);
         }
-        lblbiayakirim.setText(String.valueOf(tarifKirim.cekTarifKirim()));
-        lblbiayaasuransi.setText(String.valueOf(tarifKirim.tarifAsuransi()));
-        lbltotalbiaya.setText(String.valueOf(tarifKirim.totalTarifWithAsuransi()));
     }//GEN-LAST:event_btnprosesActionPerformed
 
     private void rbtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtonsActionPerformed
@@ -1839,6 +1872,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
         rbtexpress.setSelected(false);
         rbtsds.setSelected(false);
         rbthds.setSelected(false);
+
     }//GEN-LAST:event_rbtonsActionPerformed
 
     private void rbtsdsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtsdsActionPerformed
@@ -2050,6 +2084,15 @@ public class FormJasaCourier extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void cmbprovinsipenerimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbprovinsipenerimaActionPerformed
+        // TODO add your handling code here:
+        tarifPaket.setKotaTujuan(cmbprovinsipenerima.getSelectedItem().toString());
+        tarifKirim.setKotaTujuan(cmbprovinsipenerima.getSelectedItem().toString());
+        tarifDAO.daftarProvinsi();
+        txtprov.setText(tarifKirim.getProvinsi());
+        tarifKirim.setProvinsi(tarifKirim.getProvinsi());
+    }//GEN-LAST:event_cmbprovinsipenerimaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2165,9 +2208,8 @@ public class FormJasaCourier extends javax.swing.JFrame {
     private javax.swing.JButton btnkeluar;
     private javax.swing.JButton btnproses;
     private javax.swing.JComboBox<String> cmbjenisbarang;
-    private javax.swing.JComboBox<String> cmbkotapenerima;
     private javax.swing.JComboBox<String> cmbkotapengirim;
-    private javax.swing.JComboBox<String> cmbprovinsipenerima;
+    private javax.swing.JComboBox<Object> cmbprovinsipenerima;
     private javax.swing.JComboBox<String> cmbprovpengirim;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -2362,6 +2404,7 @@ public class FormJasaCourier extends javax.swing.JFrame {
     private javax.swing.JTextField txtnotelp;
     private javax.swing.JTextField txtnotelppenerima;
     private javax.swing.JTextField txtpanjang;
+    private javax.swing.JTextField txtprov;
     private javax.swing.JTextField txttinggi;
     // End of variables declaration//GEN-END:variables
 }

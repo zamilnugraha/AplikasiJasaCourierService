@@ -1518,16 +1518,14 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                                   <Component id="txtnamapenerima" alignment="1" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtnotelppenerima" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="cmbkotapenerima" alignment="0" pref="133" max="32767" attributes="0"/>
-                                          <Component id="cmbprovinsipenerima" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtnotelppenerima" alignment="0" pref="169" max="32767" attributes="0"/>
+                                          <Component id="txtkodepospenerima" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
+                                          <Component id="txtnohppenerima" alignment="0" pref="169" max="32767" attributes="0"/>
+                                          <Component id="cmbprovinsipenerima" alignment="0" min="-2" pref="133" max="-2" attributes="0"/>
+                                          <Component id="txtprov" alignment="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="txtkodepospenerima" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="txtnohppenerima" min="-2" pref="169" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1553,12 +1551,12 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbprovinsipenerima" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbprovinsipenerima" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cmbkotapenerima" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtprov" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1644,33 +1642,26 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel17">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Provinsi :"/>
+                <Property name="text" type="java.lang.String" value="Kota :"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbprovinsipenerima">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;DKI Jakarta&quot;,&quot;Jawa Barat&quot;,&quot;Jawa Timur&quot;,&quot;Jawa Tengah&quot;,&quot;Kalimantan&quot; })" type="code"/>
-                </Property>
-              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbprovinsipenerimaActionPerformed"/>
+              </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel18">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Kota :"/>
+                <Property name="text" type="java.lang.String" value="Provinsi :"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbkotapenerima">
+            <Component class="javax.swing.JTextField" name="txtprov">
               <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Jakarta Timur&quot;,&quot;Jakarta Barat&quot;,&quot;Jakarta Selatan&quot;,&quot;Bandung&quot;,&quot;Tasikmalaya&quot;,&quot;Malang&quot;,&quot;Yogyakarta&quot;,&quot;Surabaya&quot; })" type="code"/>
-                </Property>
+                <Property name="editable" type="boolean" value="false"/>
               </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -1729,7 +1720,6 @@
                                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="txtkodepos" min="-2" pref="90" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1748,7 +1738,7 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1850,7 +1840,7 @@
             <Component class="javax.swing.JComboBox" name="cmbprovpengirim">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;DKI Jakarta&quot;,&quot;Jawa Barat&quot;,&quot;Jawa Timur&quot;,&quot;Jawa Tengah&quot;,&quot;Kalimantan&quot; })" type="code"/>
+                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;DKI Jakarta&quot;})" type="code"/>
                 </Property>
               </Properties>
               <Events>
@@ -1863,7 +1853,7 @@
             <Component class="javax.swing.JComboBox" name="cmbkotapengirim">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Jakarta Timur&quot;,&quot;Jakarta Barat&quot;,&quot;Jakarta Selatan&quot;,&quot;Bandung&quot;,&quot;Tasikmalaya&quot;,&quot;Malang&quot;,&quot;Yogyakarta&quot;,&quot;Surabaya&quot; })" type="code"/>
+                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {&quot;Jakarta Utara&quot;, &quot;Jakarta Timur&quot;,&quot;Jakarta Barat&quot;,&quot;Jakarta Selatan&quot;})" type="code"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -2092,7 +2082,6 @@
                                   <Component id="btnhapus" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnkeluar" alignment="3" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -2113,7 +2102,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel20">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Jenis Barang :"/>
+                <Property name="text" type="java.lang.String" value="Dimensi :"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbjenisbarang">
@@ -2142,7 +2131,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel23">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Dimensi :"/>
+                <Property name="text" type="java.lang.String" value="Jenis Barang :"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel24">
