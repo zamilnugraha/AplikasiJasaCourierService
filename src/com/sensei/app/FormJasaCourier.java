@@ -1086,8 +1086,6 @@ public class FormJasaCourier extends javax.swing.JFrame {
 
         jLabel18.setText("Provinsi :");
 
-        txtprov.setEditable(false);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1809,6 +1807,8 @@ public class FormJasaCourier extends javax.swing.JFrame {
             lbljenisbarang.setText(tarifKirim.getTipePaket());
             tarifKirim.setKotaTujuan(cmbprovinsipenerima.getSelectedItem().toString());
             tarifPaket.setKotaTujuan(cmbprovinsipenerima.getSelectedItem().toString());
+            lblkotapenerimas.setText(tarifPaket.getKotaTujuan());
+            lblprovpenerima.setText(txtprov.getText());
             tarifPaket.setNoPaket(txtnopaket.getText());
             if (rbtons.isSelected()) {
                 tarifPaket.setTipePaket(rbtons.getText());
@@ -1830,28 +1830,43 @@ public class FormJasaCourier extends javax.swing.JFrame {
             if (rbtons.isSelected()) {
                 tarifPaket.tarifPaketONS();
                 tarifPaket.setHargaKaliBerat();
+                tarifPaket.setNilaAsuransi();
                 tarifPaket.setHargaAsuransi();
-                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+                lbltotalbiaya.setText(tarifPaket.getHargaAsuransi() + "");
+                lblbiayakirim.setText(tarifPaket.getHargaKaliBerat() +"");
+                lblbiayaasuransi.setText(tarifPaket.getNilaAsuransi() + "");
             } else if (rbthds.isSelected()) {
                 tarifPaket.tarifPaketHDS();
                 tarifPaket.setHargaKaliBerat();
+                tarifPaket.setNilaAsuransi();
                 tarifPaket.setHargaAsuransi();
-                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+                lbltotalbiaya.setText(tarifPaket.getHargaAsuransi() + "");
+                lblbiayakirim.setText(tarifPaket.getHargaKaliBerat() +"");
+                lblbiayaasuransi.setText(tarifPaket.getNilaAsuransi() + "");
             } else if (rbtsds.isSelected()) {
                 tarifPaket.tarifPaketSDS();
                 tarifPaket.setHargaKaliBerat();
+                tarifPaket.setNilaAsuransi();
                 tarifPaket.setHargaAsuransi();
-                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+                lbltotalbiaya.setText(tarifPaket.getHargaAsuransi() + "");
+                lblbiayakirim.setText(tarifPaket.getHargaKaliBerat() +"");
+                lblbiayaasuransi.setText(tarifPaket.getNilaAsuransi() + "");
             } else if (rbtexpress.isSelected()) {
                 tarifPaket.tarifPaketExpress();
                 tarifPaket.setHargaKaliBerat();
+                tarifPaket.setNilaAsuransi();
                 tarifPaket.setHargaAsuransi();
-                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+                lbltotalbiaya.setText(tarifPaket.getHargaAsuransi() + "");
+                lblbiayakirim.setText(tarifPaket.getHargaKaliBerat() +"");
+                lblbiayaasuransi.setText(tarifPaket.getNilaAsuransi() + "");
             } else if (rbtreguler.isSelected()) {
                tarifPaket.tarifPaketReguler();
                 tarifPaket.setHargaKaliBerat();
+                tarifPaket.setNilaAsuransi();
                 tarifPaket.setHargaAsuransi();
-                lblbiayakirim.setText(tarifPaket.getHargaAsuransi() + "");
+                lbltotalbiaya.setText(tarifPaket.getHargaAsuransi() + "");
+                lblbiayakirim.setText(tarifPaket.getHargaKaliBerat() +"");
+                lblbiayaasuransi.setText(tarifPaket.getNilaAsuransi() + "");
             }
 
             FormJasaCourier forms = new FormJasaCourier();
@@ -2086,8 +2101,6 @@ public class FormJasaCourier extends javax.swing.JFrame {
 
     private void cmbprovinsipenerimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbprovinsipenerimaActionPerformed
         // TODO add your handling code here:
-        tarifPaket.setKotaTujuan(cmbprovinsipenerima.getSelectedItem().toString());
-        tarifKirim.setKotaTujuan(cmbprovinsipenerima.getSelectedItem().toString());
         tarifDAO.daftarProvinsi();
         txtprov.setText(tarifKirim.getProvinsi());
         tarifKirim.setProvinsi(tarifKirim.getProvinsi());

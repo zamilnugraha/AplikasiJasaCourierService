@@ -85,11 +85,17 @@ public class FileTarifKreditDAO {
                 String line = scan.nextLine();
                 String[] data = line.split(",");
                 String kota = data[1].trim();
-                if (kota.equalsIgnoreCase(tarifss.getKotaTujuan())) {
-                    arrayProvinsi = data[0];
-                    tarifss.setProvinsi(arrayProvinsi);
+                arrayProvinsi = data[0];
+                tarifss.setProvinsi(arrayProvinsi);
+
+                for (String provinsi : getHitungTarifKota()) {
+                    if (kota.equalsIgnoreCase(tarifss.getKotaTujuan())) {
+                        arrayProvinsi = data[0];
+                        tarifss.setProvinsi(arrayProvinsi);
+                    }
                 }
             }
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FileTarifKreditDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
